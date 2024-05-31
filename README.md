@@ -1,9 +1,8 @@
-# install-qt-static
+# install qt static lib
 action to install static qt to windows
 
 * version support value list
-  * [x] Qt5.6.3-Windows-x86-MinGW4.9.4-staticFull-20200104
-  * [x] Qt5.15.7-Windows-x86-MinGW8.1.0-staticFull-20221104
-  * [x] Qt5.15.7-Windows-x86_64-MinGW8.1.0-staticFull-20221104
+  * [x] Qt6.7.1-Windows-MinGW13.2.0
+  * [x] Qt5.15.7-Windows-MinGW8.1.0
 * runner.os support
   * [x] Windows
