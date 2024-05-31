@@ -1,6 +1,6 @@
 name: Install Qt Static
-description: Install Qt Static on your Github Actions workflows with just one simple action
-author: orestonce
+description: Install Qt Static lib
+author: L-Super
 branding:
   icon: package
   color: green
@@ -10,7 +10,7 @@ inputs:
     default: "qt_static_install"
   version:
     description: Version of Qt to install
-    default: "Qt5.15.7-Windows-x86-MinGW8.1.0-staticFull-20221104"
+    default: "Qt6.7.1-Windows-MinGW13.2.0"
 runs:
   using: "composite"
   steps:
@@ -29,18 +29,11 @@ runs:
           exit -2
       }
       switch ( "${{ inputs.version }}" ) {
-            "Qt5.6.3-Windows-x86-MinGW4.9.4-staticFull-20200104" {
-              $var_qt_URL = "https://github.com/orestonce/action/releases/download/qt-static5.6.3/Qt5.6.3-Windows-x86-MinGW4.9.4-staticFull-20200104-ManualPatchSslLib.7z"
-              $var_mingw_URL = "https://github.com/orestonce/action/releases/download/qt-static5.6.3/i686-4.9.4-release-posix-dwarf-rt_v5-rev0.7z"
-              $var_qt_dir_name = "Qt5.6.3-Windows-x86-MinGW4.9.4-staticFull-20200104"
-              $var_mingw_dir_name = "mingw32"
-              break
-            }
-            "Qt5.15.7-Windows-x86-MinGW8.1.0-staticFull-20221104" {
-              $var_qt_URL = "https://github.com/orestonce/action/releases/download/qt5.15.7/Qt5.15.7-Windows-x86-MinGW8.1.0-staticFull-20221104.7z"
-              $var_mingw_URL = "https://github.com/orestonce/action/releases/download/qt5.15.7/i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z"
-              $var_qt_dir_name = "Qt5.15.7-Windows-x86-MinGW8.1.0-staticFull"
-              $var_mingw_dir_name = "mingw32"
+            "Qt6.7.1-Windows-MinGW13.2.0" {
+              $var_qt_URL = "https://github.com/L-Super/FramelessWindow/releases/download/v1.0.0/Qt6.7.1-Windows-MinGW13.2.0.7z"
+              $var_mingw_URL = "https://github.com/L-Super/FramelessWindow/releases/download/v1.0.0/x86_64-13.2.0-release-posix-seh-ucrt.7z"
+              $var_qt_dir_name = "Qt6.7.1-Windows-MinGW13.2.0"
+              $var_mingw_dir_name = "mingw64"
               break
             }
             "Qt5.15.7-Windows-x86_64-MinGW8.1.0-staticFull-20221104" {
