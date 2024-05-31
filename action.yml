@@ -1,5 +1,5 @@
-name: Qt static lib
-description: Install Qt Static lib
+name: Install Qt static library
+description: Install Qt Static library for static link
 author: L-Super
 branding:
   icon: package
@@ -7,7 +7,7 @@ branding:
 inputs:
   dir:
     description: Directory to install Qt
-    default: "qt_static_install"
+    default: "Qt_static"
   version:
     description: Version of Qt to install
     default: "Qt6.7.1-Windows-MinGW13.2.0"
@@ -15,13 +15,13 @@ runs:
   using: "composite"
   steps:
   - name: Cache Primes
-    id: cache_orestonce_install-qt-static
+    id: cache-install-qt-static
     uses: actions/cache@v3
     with:
       path: ${{ inputs.dir }}
-      key: ${{ inputs.version }}-cache_orestonce_install-qt-static2
+      key: ${{ inputs.version }}-cache-qt-static
   - name: install Qt static of windows to dir
-    if: steps.cache_orestonce_install-qt-static.outputs.cache-hit != 'true'
+    if: steps.cache-install-qt-static.outputs.cache-hit != 'true'
     shell: powershell
     run: |
       if ( '${{ runner.os }}' -ne 'Windows') {
@@ -31,7 +31,7 @@ runs:
       switch ( "${{ inputs.version }}" ) {
             "Qt6.7.1-Windows-MinGW13.2.0" {
               $var_qt_URL = "https://github.com/L-Super/FramelessWindow/releases/download/v1.0.0/Qt6.7.1-Windows-MinGW13.2.0.7z"
-              $var_mingw_URL = "https://github.com/L-Super/FramelessWindow/releases/download/v1.0.0/x86_64-13.2.0-release-posix-seh-ucrt.7z"
+              $var_mingw_URL = "https://github.com/L-Super/FramelessWindow/releases/download/v1.0.0/mingw64-13.2.0.7z"
               $var_qt_dir_name = "Qt6.7.1-Windows-MinGW13.2.0"
               $var_mingw_dir_name = "mingw64"
               break
@@ -49,8 +49,8 @@ runs:
                break
             }
           }
-      $var_qt_7z = $var_qt_URL.Substring($var_qt_URL.lastIndexOf('/')+1)
-      $var_mingw_7z = $var_mingw_URL.Substring($var_mingw_URL.lastIndexOf('/')+1)
+      $var_qt_7z = $var_qt_URL.Substring($var_qt_URL.lastIndexOf('/') + 1)
+      $var_mingw_7z = $var_mingw_URL.Substring($var_mingw_URL.lastIndexOf('/') + 1)
       
       New-Item -ItemType Directory -Force -Path ${{ inputs.dir }}
       cd ${{ inputs.dir }}
@@ -63,18 +63,15 @@ runs:
       Remove-Item -Recurse -Force $var_qt_7z
       Remove-Item -Recurse -Force $var_mingw_7z
       
-      if ( $var_qt_dir_name -ne 'qt_install') {
-          move $var_qt_dir_name qt_install
+      if ( $var_qt_dir_name -ne 'Qt') {
+          move $var_qt_dir_name Qt
       }
-      if ( $var_mingw_dir_name -ne 'mingw_install') {
-          move $var_mingw_dir_name mingw_install
+      if ( $var_mingw_dir_name -ne 'MinGW') {
+          move $var_mingw_dir_name MinGW
       }
   - name: setup Qt env
     shell: powershell
     run: |
       cd ${{ inputs.dir }}
-      Add-Content $env:GITHUB_PATH "${PWD}\qt_install\bin"
-      Add-Content $env:GITHUB_PATH "${PWD}\mingw_install\bin"
-      if ( '${{ inputs.version }}' -eq 'Qt5.6.3-Windows-x86-MinGW4.9.4-staticFull-20200104') {
-        .\qt_install\QQtPatcher.exe
-      }
+      Add-Content $env:GITHUB_PATH "${PWD}\Qt\bin"
+      Add-Content $env:GITHUB_PATH "${PWD}\MinGW\bin"
